@@ -6,8 +6,9 @@ import { api } from '../../services/api'
 import { useUser } from '../../providers/userContext'
 import './style.css'
 import { toast } from 'react-toastify'
+// import { Header } from "../../components/Header"
 export const Home = () => {
-  const { userId, setName, setEmail, setImage, token} = useUser();
+  const { userId, setName, setEmail, setImage, token } = useUser();
   const [show, setShow] = useState(false);
   const [tournamentInCode, setTournamentInCode] = useState();
   const [teamCode, setTeamCode] = useState();
@@ -18,27 +19,27 @@ export const Home = () => {
   const [championship, setChampionship] = useState([])
   const [allUsers, setAllUsers] = useState([])
 
-  const handlerTournamentInCode = ({target}) => {
+  const handlerTournamentInCode = ({ target }) => {
     setTournamentInCode(target.value);
   }
 
-  const handlerTeamCode = ({target}) => {
+  const handlerTeamCode = ({ target }) => {
     setTeamCode(target.value);
   }
 
-  const handlerTeamName = ({target}) => {
+  const handlerTeamName = ({ target }) => {
     setTeamName(target.value);
   }
 
-  const handlerDescription = ({target}) => {
+  const handlerDescription = ({ target }) => {
     setDescription(target.value);
   }
 
-  const handlerTeams = ({target}) => {
+  const handlerTeams = ({ target }) => {
     setTeams(target.value);
   }
 
-  const handlerAward = ({target}) => {
+  const handlerAward = ({ target }) => {
     setAward(target.value);
   }
 
@@ -46,10 +47,10 @@ export const Home = () => {
   const handleShow = () => setShow(true);
 
   const enterTeam = async () => {
-    try{
+    try {
       let res = await api.post(`/team/${teamCode}/championship/${tournamentInCode}/insert`)
       toast.success(res.message);
-    }catch(e){
+    } catch (e) {
       toast.error(e.response.data.message);
     }
   }
@@ -61,19 +62,19 @@ export const Home = () => {
       numberTeams: teams,
       award
     }
-    try{
+    try {
       let res = await api.post(`/championship/create`, obj, auth(token));
       toast.success(res.data.message);
       getTournaments();
       handleClose();
-    }catch(e){
+    } catch (e) {
       toast.error(e.response.data.message);
     }
   }
 
   const getUserData = async () => {
     let res = await api.get(`/user/${userId}`, auth(token))
-    
+
     setName(res.data.findUser.name);
     setEmail(res.data.findUser.email);
     setImage(res.data.findUser.image);
@@ -91,27 +92,34 @@ export const Home = () => {
     setAllUsers(res.data.allUsers)
   }
 
+  // useEffect(() => {
+  //   getUserData();
+  //   getAllUsers();
+  //   getTournaments();
+  // })
+
   useEffect(() => {
     getUserData();
     getAllUsers();
     getTournaments();
-  },[userId])
+  }, [userId])
+
   return (
     <>
       <Row>
         <Col md={2}>
           <h3>Torneios</h3>
         </Col>
-        <Col md={7}>
+        <Col md={6}>
           <InputGroup className="mb-3">
             <FormControl
-              placeholder="Username"
-              aria-label="Username"
+              placeholder="Pesquisar"
+              aria-label="Pesquisar"
               aria-describedby="basic-addon1"
             />
           </InputGroup>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <p>Ordenar</p>
         </Col>
         <Col md={2}>
@@ -119,16 +127,16 @@ export const Home = () => {
         </Col>
       </Row>
       {championship.map(championship => {
-        return(
+        return (
           <div className={"cardsContainer"} key={championship.championshipId}>
             <Row className={"toneioCard"}>
               <Col md={1}>
-                <img src={avatar} width={50}/>
+                <img src={avatar} alt="logo do torneio" width={50} />
               </Col>
               <Col md={6}>
                 <h2>{championship.name}</h2>
               </Col>
-              <Col md={3}>Criado Por: {allUsers.filter(user => user.userId == championship.creatorUserId)[0].name}</Col>
+              <Col md={3}>Criado Por: {allUsers.filter(user => user.userId === championship.creatorUserId)[0].name}</Col>
               <Col md={2}>Status: {championship.status}</Col>
             </Row>
           </div>
@@ -137,25 +145,25 @@ export const Home = () => {
       })}
 
       <Modal show={show} onHide={handleClose} >
-       
+
         <Modal.Body className={"modalNewTeam"}>
           <Form method="submit">
             <h3>Entrar em um Torneio</h3>
             <Row>
               <Form.Group>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Código do torneio" 
-                  onChange={ e => handlerTournamentInCode(e) }
+                <Form.Control
+                  type="text"
+                  placeholder="Código do torneio"
+                  onChange={e => handlerTournamentInCode(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
             <Row>
               <Form.Group>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Código de time" 
-                  onChange={ e => handlerTeamCode(e) }
+                <Form.Control
+                  type="text"
+                  placeholder="Código de time"
+                  onChange={e => handlerTeamCode(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
@@ -165,53 +173,53 @@ export const Home = () => {
               </Col>
             </Row>
           </Form>
-          <p>Ou</p>        
+          <p>Ou</p>
           <Form method="submit">
             <Row>
               <Form.Group>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Nome do torneio" 
-                  onChange={ e => handlerTeamName(e) }
+                <Form.Control
+                  type="text"
+                  placeholder="Nome do torneio"
+                  onChange={e => handlerTeamName(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
             <Row>
               <Form.Group>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Descrição do torneio" 
-                  onChange={ e => handlerDescription(e) }
+                <Form.Control
+                  type="text"
+                  placeholder="Descrição do torneio"
+                  onChange={e => handlerDescription(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
             <Row>
               <Form.Group>
-                <Form.Control 
-                  type="number" 
-                  placeholder="Nº de times participantes" 
-                  onChange={ e => handlerTeams(e) }
+                <Form.Control
+                  type="number"
+                  placeholder="Nº de times participantes"
+                  onChange={e => handlerTeams(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
             <Row>
               <Form.Group>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Premiação" 
-                  onChange={ e => handlerAward(e) }
+                <Form.Control
+                  type="text"
+                  placeholder="Premiação"
+                  onChange={e => handlerAward(e)}
                 ></Form.Control>
               </Form.Group>
-            </Row> 
+            </Row>
             <Row>
               <Col md={12}>
                 <Button type={"button"} variant={"primary"} onClick={() => registerTournament()}>Entrar no Time</Button>
               </Col>
-            </Row>      
+            </Row>
 
           </Form>
         </Modal.Body>
-        
+
       </Modal>
     </>
   )

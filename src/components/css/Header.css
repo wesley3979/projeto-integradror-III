@@ -1,9 +1,10 @@
-.pageHeader{
+.pageHeader {
     height: 130px !important;
     background: #4717F6 !important;
     margin-bottom: 5%;
 }
-.icon{
+
+.icon {
     background: #E5E5E5;
     width: 60px;
     height: 60px;
@@ -11,27 +12,30 @@
     padding: 2px 1px;
     transform: translateY(-80%);
 }
-.dropDownIcon{
+
+.dropDownIcon {
     background: #E5E5E5;
-    width: 80px;    
+    width: 80px;
     height: 80px;
     border-radius: 50%;
- 
+
 }
-.dropdownToggle{
+
+.dropdownToggle {
     transform: translate(300%, -200%);
 
 }
-.userDropdown{
+
+.userDropdown {
     min-width: 350px;
     padding: 10px;
     border-radius: 10px;
     background: #4717F6 !important;
     transform: translate(-80%, 10%);
-    -webkit-box-shadow: 1px 2px 15px 5px #000000; 
+    -webkit-box-shadow: 1px 2px 15px 5px #000000;
     box-shadow: 1px 2px 15px 5px #000000;
 }
 
-.menuItems:hover{
+.menuItems:hover {
     cursor: pointer;
 }

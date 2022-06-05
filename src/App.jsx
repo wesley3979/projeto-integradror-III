@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from './components/Layout';
 import { UserProvider } from './providers/userContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,7 +20,7 @@ function App() {
         rtl={false}
         pauseOnFocusLoss
         draggable={false}
-        pauseOnHover 
+        pauseOnHover
       />
     </>
   )

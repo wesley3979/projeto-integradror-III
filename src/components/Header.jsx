@@ -18,29 +18,29 @@ export const Header = () => {
   const handleVisible = () => {
     setVisible(!visible);
   }
-  
+
   const redirectTournaments = () => {
     history.push('/home')
   }
- 
+
   const redirectTeams = () => {
     history.push('/teams')
   }
   return (
     <header className="pageHeader">
       <Row>
-        <Col md={{span: 2, offset: 1}}>
-          <div style={{display: "flex", gap: 10, marginBottom: "10", marginTop: 40 }}>
+        <Col md={{ span: 2, offset: 1 }}>
+          <div style={{ display: "flex", gap: 10, marginBottom: "10", marginTop: 40 }}>
             <TorneioIcon />
-            <h2>Torne-<span style={{color: "#E0E41A"}}>IO</span></h2>
+            <h2>Torne-<span style={{ color: "#E0E41A" }}>IO</span></h2>
           </div>
         </Col>
-        <Col md={{span: 2, offset: 10}} style={{display: "flex"}}>
+        <Col md={{ span: 2, offset: 10 }} style={{ display: "flex" }}>
           <div className={"icon"} onClick={() => handleVisible()}>
             <UserDefaultIcon />
             <Arrow className={"dropdownToggle"} />
           </div>
-          {visible &&(
+          {visible && (
             <div className={"userDropdown"}>
               <div className={"userData"}>
                 <Row>
@@ -50,15 +50,15 @@ export const Header = () => {
                     </div>
                   </Col>
                   <Col md={8}>
-                      <h5>{name}</h5>
-                      <p>Editar Conta</p>
+                    <h5>{name}</h5>
+                    <p>Editar Conta</p>
                   </Col>
                 </Row>
               </div>
               <hr />
               <div >
                 <Row>
-                  <Col style={{textAlign: "center"}} className={"menuItems"} onClick={()=> redirectTournaments()}>
+                  <Col style={{ textAlign: "center" }} className={"menuItems"} onClick={() => redirectTeams()}>
                     <TorneiosIcon /> <b>Torneios</b>
                   </Col>
                 </Row>
@@ -66,7 +66,7 @@ export const Header = () => {
               <hr />
               <div >
                 <Row>
-                  <Col style={{textAlign: "center"}} className={"menuItems"}>
+                  <Col style={{ textAlign: "center" }} className={"menuItems"} onClick={() => redirectTournaments()}>
                     <TimesIcon /> <b>Times</b>
                   </Col>
                 </Row>
@@ -74,7 +74,7 @@ export const Header = () => {
               <hr />
               <div >
                 <Row>
-                  <Col style={{textAlign: "center"}} className={"menuItems"}>
+                  <Col style={{ textAlign: "center" }} className={"menuItems"}>
                     <SairIcon /> <b>Sair</b>
                   </Col>
                 </Row>

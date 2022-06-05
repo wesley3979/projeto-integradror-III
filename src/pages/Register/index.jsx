@@ -8,14 +8,22 @@ import "./style.css"
 import { useHistory } from "react-router-dom"
 import { toast } from "react-toastify"
 
-export const Login = () => {
-  const [loginEmail, setLoginEmail] = useState();
+export const Register = () => {
+  const [registerName, setRegisterName] = useState();
+  const [registerEmail, setRegisterEmail] = useState();
   const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const { setUserId, setToken } = useUser();
   const history = useHistory()
+
+  const handlerName = ({ target }) => {
+    let { value } = target
+    setRegisterName(value);
+  }
+
   const handlerEmail = ({ target }) => {
     let { value } = target
-    setLoginEmail(value);
+    setRegisterEmail(value);
   }
 
   const handlerPassword = ({ target }) => {
@@ -23,13 +31,20 @@ export const Login = () => {
     setPassword(value);
   }
 
+  const handlerConfirmPassword = ({ target }) => {
+    let { value } = target
+    setConfirmPassword(value);
+  }
+
   const handlerSubmit = async () => {
     const obj = {
-      email: loginEmail,
-      password
+      name: registerName,
+      email: registerEmail,
+      password,
+      confirmpassword: confirmPassword
     }
     try {
-      let res = await api.post('/user/login', obj)
+      let res = await api.post('/user/register', obj)
       console.log(res.data);
       setToken(res.data.token);
       setUserId(res.data.id);
@@ -43,7 +58,7 @@ export const Login = () => {
   return (
     <>
       <Row>
-        <header className="loginHeader" style={{ display: "flex", gap: 10, marginBottom: "3%", marginTop: "3%" }}>
+        <header className="registerHeader" style={{ display: "flex", gap: 10, marginBottom: "3%", marginTop: "3%" }}>
           <TorneioIcon />
           <h2>Torne-<span style={{ color: "#E0E41A" }}>IO</span></h2>
         </header>
@@ -56,7 +71,14 @@ export const Login = () => {
         </Col>
         <Col md={{ span: 4, offset: 3 }} className="content-right">
           <Form method="submit" onSubmit={(e) => handlerSubmit(e)} style={{ marginTop: "30%", marginBottom: "5%" }}>
-            <h3 style={{ marginBottom: "3%" }} >Faça login para continuar</h3>
+            <h3 style={{ marginBottom: "3%" }} >Crie sua conta de forma simples</h3>
+            <Form.Group style={{ marginBottom: "1%" }}>
+              <Form.Control
+                type="name"
+                placeholder="Nome completo"
+                onChange={e => handlerName(e)}
+              ></Form.Control>
+            </Form.Group>
             <Form.Group style={{ marginBottom: "1%" }}>
               <Form.Control
                 type="email"
@@ -71,11 +93,18 @@ export const Login = () => {
                 onChange={e => handlerPassword(e)}
               ></Form.Control>
             </Form.Group>
-            <Button type="button" onClick={handlerSubmit} variant="primary">Fazer Login</Button>
+            <Form.Group style={{ marginBottom: "3%" }}>
+              <Form.Control
+                type="password"
+                placeholder="Confirme a senha"
+                onChange={e => handlerConfirmPassword(e)}
+              ></Form.Control>
+            </Form.Group>
+            <Button type="button" onClick={handlerSubmit} variant="primary">Criar conta</Button>
           </Form>
           <p className="divider">ou</p>
-          <h3>Crie sua própria conta, de forma fácil</h3>
-          <Button type="button" variant="outline-primary" >Criar conta</Button>
+          <h3>Já tem uma conta?</h3>
+          <Button type="button" variant="outline-primary" >Faça login</Button>
         </Col>
       </Row>
     </>
