@@ -1,38 +1,54 @@
-import { useState } from "react"
-import { Col, Row } from "react-bootstrap"
-import { ReactComponent as TorneioIcon } from "../assets/torneioIcon.svg"
-import { ReactComponent as UserDefaultIcon } from "../assets/user.svg"
-import { ReactComponent as UserDefaultIcon2 } from "../assets/user-2.svg"
-import { ReactComponent as Arrow } from "../assets/down-arrow.svg"
-import { ReactComponent as TorneiosIcon } from "../assets/icon-torneios.svg"
-import { ReactComponent as TimesIcon } from "../assets/icon-times.svg"
-import { ReactComponent as SairIcon } from "../assets/icon-sair.svg"
+import { useState } from "react";
+import { Col, Row } from "react-bootstrap";
+import { ReactComponent as TorneioIcon } from "../assets/torneioIcon.svg";
+import { ReactComponent as UserDefaultIcon } from "../assets/user.svg";
+import { ReactComponent as UserDefaultIcon2 } from "../assets/user-2.svg";
+import { ReactComponent as Arrow } from "../assets/down-arrow.svg";
+import { ReactComponent as TorneiosIcon } from "../assets/icon-torneios.svg";
+import { ReactComponent as TimesIcon } from "../assets/icon-times.svg";
+import { ReactComponent as SairIcon } from "../assets/icon-sair.svg";
 
-import './css/Header.css'
-import { useUser } from "../providers/userContext"
-import { useHistory } from "react-router-dom"
+import "./css/Header.css";
+import { useUser } from "../providers/userContext";
+import { useHistory, Redirect } from "react-router-dom";
 export const Header = () => {
   const [visible, setVisible] = useState(false);
   const { name } = useUser();
-  const history = useHistory()
+  const history = useHistory();
   const handleVisible = () => {
     setVisible(!visible);
-  }
+  };
 
   const redirectTournaments = () => {
-    history.push('/home')
-  }
+    // history.push("/home");
+    return <Redirect to='/home' />
+  };
 
   const redirectTeams = () => {
-    history.push('/teams')
-  }
+    // history.push("/teams");
+    return <Redirect to='/teams' />
+  };
+
+  const redirectLogin = () => {
+    // history.push("/teams");
+    return <Redirect to='/login' />
+  };
   return (
     <header className="pageHeader">
       <Row>
         <Col md={{ span: 2, offset: 1 }}>
-          <div style={{ display: "flex", gap: 10, marginBottom: "10", marginTop: 40 }}>
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              marginBottom: "10",
+              marginTop: 40,
+            }}
+          >
             <TorneioIcon />
-            <h2>Torne-<span style={{ color: "#E0E41A" }}>IO</span></h2>
+            <h2>
+              Torne-<span style={{ color: "#E0E41A" }}>IO</span>
+            </h2>
           </div>
         </Col>
         <Col md={{ span: 2, offset: 10 }} style={{ display: "flex" }}>
@@ -56,25 +72,36 @@ export const Header = () => {
                 </Row>
               </div>
               <hr />
-              <div >
+              <div>
                 <Row>
-                  <Col style={{ textAlign: "center" }} className={"menuItems"} onClick={() => redirectTeams()}>
+                  <Col
+                    style={{ textAlign: "center" }}
+                    className={"menuItems"}
+                    onClick={() => redirectTournaments()}
+                  >
                     <TorneiosIcon /> <b>Torneios</b>
                   </Col>
                 </Row>
               </div>
               <hr />
-              <div >
+              <div>
                 <Row>
-                  <Col style={{ textAlign: "center" }} className={"menuItems"} onClick={() => redirectTournaments()}>
+                  <Col
+                    style={{ textAlign: "center" }}
+                    className={"menuItems"}
+                    onClick={() => redirectTeams()}
+                  >
                     <TimesIcon /> <b>Times</b>
                   </Col>
                 </Row>
               </div>
               <hr />
-              <div >
+              <div>
                 <Row>
-                  <Col style={{ textAlign: "center" }} className={"menuItems"}>
+                  <Col style={{ textAlign: "center" }} 
+                  className={"menuItems"}
+                  onClick={() => redirectLogin()}
+                  >
                     <SairIcon /> <b>Sair</b>
                   </Col>
                 </Row>
@@ -84,5 +111,5 @@ export const Header = () => {
         </Col>
       </Row>
     </header>
-  )
-}
+  );
+};
