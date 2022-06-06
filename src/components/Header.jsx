@@ -20,17 +20,14 @@ export const Header = () => {
   };
 
   const redirectTournaments = () => {
-    // history.push("/home");
     return <Redirect to='/home' />
   };
 
   const redirectTeams = () => {
-    // history.push("/teams");
     return <Redirect to='/teams' />
   };
 
   const redirectLogin = () => {
-    // history.push("/teams");
     return <Redirect to='/login' />
   };
   return (
