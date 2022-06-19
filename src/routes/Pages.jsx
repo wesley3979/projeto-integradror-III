@@ -9,6 +9,7 @@ export const Pages = () => {
   return (
     <Router>
       <Switch >
+      <Route path="/" exact={true} component={Login} />
         <Route path="/login" exact={true} component={Login} />
         <Route path="/register" exact={true} component={Register} />
         <Route path="/home" exact={true} component={Home} />

@@ -70,7 +70,7 @@ export const Register = () => {
 
         </Col>
         <Col md={{ span: 4, offset: 3 }} className="content-right">
-          <Form method="submit" onSubmit={(e) => handlerSubmit(e)} style={{ marginTop: "30%", marginBottom: "5%" }}>
+          <Form method="submit" onSubmit={(e) => handlerSubmit(e)} style={{ marginTop: "10%", marginBottom: "5%" }}>
             <h3 style={{ marginBottom: "3%" }} >Crie sua conta de forma simples</h3>
             <Form.Group style={{ marginBottom: "1%" }}>
               <Form.Control
@@ -104,7 +104,7 @@ export const Register = () => {
           </Form>
           <p className="divider">ou</p>
           <h3>Já tem uma conta?</h3>
-          <Button type="button" variant="outline-primary" >Faça login</Button>
+          <Button type="button" variant="outline-primary" ><a href="/login" style={{textDecoration: "none", color: "inherit" }}>Faça login</a></Button>
         </Col>
       </Row>
     </>

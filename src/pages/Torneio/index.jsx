@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth } from "../../services/auth";
 import { api } from "../../services/api";
+import { ReactComponent as SairIcon } from "../../assets/icon-sair.svg";
 import {
   Col,
   Row,
@@ -12,6 +13,9 @@ import {
   ListGroupItem,
   Dropdown,
   DropdownButton,
+  InputGroup,
+  FormControl,
+  Button,
 } from "react-bootstrap";
 import "./style.css";
 
@@ -28,12 +32,12 @@ export const Torneio = () => {
   };
 
   const GetTableByChampionshipId = async () => {
-    let res = await api.get("/championship/9/table", auth(token));
+    let res = await api.get("/championship/3/table", auth(token));
     setRanking(res.data.table);
   };
 
   const GetMatchesByChaphioshipId = async () => {
-    let res = await api.get("/championship/9/matches", auth(token));
+    let res = await api.get("/championship/3/matches", auth(token));
     setMatches(res.data.matches);
   };
 
@@ -45,6 +49,16 @@ export const Torneio = () => {
 
   return (
     <>
+      <Row className="mt-2 mb-2">
+        <Col md={2}>
+          <Button variant="primary">
+            <a href="/home" style={{ textDecoration: "none", color: "inherit" }}>
+              <SairIcon />
+              Voltar
+            </a>
+          </Button>
+        </Col>
+      </Row>
       <Row>
         <Card bg={"secondary"} className="mb-2 text-center">
           <Card.Title>

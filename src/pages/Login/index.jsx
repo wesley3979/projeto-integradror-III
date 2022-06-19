@@ -75,7 +75,7 @@ export const Login = () => {
           </Form>
           <p className="divider">ou</p>
           <h3>Crie sua própria conta, de forma fácil</h3>
-          <Button type="button" variant="outline-primary" >Criar conta</Button>
+          <Button type="button" variant="outline-primary" ><a href="/register" style={{textDecoration: "none", color: "inherit" }}>Criar conta</a></Button>
         </Col>
       </Row>
     </>

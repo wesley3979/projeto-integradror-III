@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Row, InputGroup, FormControl, Button, Modal, Form } from 'react-bootstrap'
-import avatar from '../../assets/pic.png'
-import { auth } from '../../services/auth'
-import { api } from '../../services/api'
-import { useUser } from '../../providers/userContext'
-import './style.css'
-import { toast } from 'react-toastify'
+import React, { useEffect, useState } from "react";
+import {
+  Col,
+  Row,
+  InputGroup,
+  FormControl,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
+import avatar from "../../assets/pic.png";
+import { auth } from "../../services/auth";
+import { api } from "../../services/api";
+import { useUser } from "../../providers/userContext";
+import "./style.css";
+import { toast } from "react-toastify";
 // import { Header } from "../../components/Header"
 export const Home = () => {
   const { userId, setName, setEmail, setImage, token } = useUser();
@@ -16,52 +24,54 @@ export const Home = () => {
   const [description, setDescription] = useState();
   const [teams, setTeams] = useState();
   const [award, setAward] = useState();
-  const [championship, setChampionship] = useState([])
-  const [allUsers, setAllUsers] = useState([])
+  const [championship, setChampionship] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   const handlerTournamentInCode = ({ target }) => {
     setTournamentInCode(target.value);
-  }
+  };
 
   const handlerTeamCode = ({ target }) => {
     setTeamCode(target.value);
-  }
+  };
 
   const handlerTeamName = ({ target }) => {
     setTeamName(target.value);
-  }
+  };
 
   const handlerDescription = ({ target }) => {
     setDescription(target.value);
-  }
+  };
 
   const handlerTeams = ({ target }) => {
     setTeams(target.value);
-  }
+  };
 
   const handlerAward = ({ target }) => {
     setAward(target.value);
-  }
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const enterTeam = async () => {
     try {
-      let res = await api.post(`/team/${teamCode}/championship/${tournamentInCode}/insert`)
+      let res = await api.post(
+        `/team/${teamCode}/championship/${tournamentInCode}/insert`
+      );
       toast.success(res.message);
     } catch (e) {
       toast.error(e.response.data.message);
     }
-  }
+  };
 
   const registerTournament = async () => {
     let obj = {
       name: teamName,
       description,
       numberTeams: teams,
-      award
-    }
+      award,
+    };
     try {
       let res = await api.post(`/championship/create`, obj, auth(token));
       toast.success(res.data.message);
@@ -70,27 +80,27 @@ export const Home = () => {
     } catch (e) {
       toast.error(e.response.data.message);
     }
-  }
+  };
 
   const getUserData = async () => {
-    let res = await api.get(`/user/${userId}`, auth(token))
+    let res = await api.get(`/user/${userId}`, auth(token));
 
     setName(res.data.findUser.name);
     setEmail(res.data.findUser.email);
     setImage(res.data.findUser.image);
-  }
+  };
 
   const getTournaments = async () => {
-    let res = await api.get('/championship', auth(token));
+    let res = await api.get("/championship", auth(token));
     console.log(res.data.championship);
     setChampionship(res.data.championship);
-  }
+  };
 
   const getAllUsers = async () => {
-    let res = await api.get('/user', auth(token))
-    console.log(res.data.allUsers)
-    setAllUsers(res.data.allUsers)
-  }
+    let res = await api.get("/user", auth(token));
+    console.log(res.data.allUsers);
+    setAllUsers(res.data.allUsers);
+  };
 
   // useEffect(() => {
   //   getUserData();
@@ -102,11 +112,11 @@ export const Home = () => {
     getUserData();
     getAllUsers();
     getTournaments();
-  }, [userId])
+  }, [userId]);
 
   return (
     <>
-      <Row>
+      <Row className="mt-5">
         <Col md={2}>
           <h3>Torneios</h3>
         </Col>
@@ -123,29 +133,41 @@ export const Home = () => {
           <p>Ordenar</p>
         </Col>
         <Col md={2}>
-          <Button variant="primary" onClick={handleShow}>Criar Torneio</Button>
+          <Button variant="primary" onClick={handleShow}>
+            Criar Torneio
+          </Button>
         </Col>
       </Row>
-      {championship.map(championship => {
+      {championship.map((championship) => {
         return (
           <div className={"cardsContainer"} key={championship.championshipId}>
-            <Row className={"toneioCard"}>
-              <Col md={1}>
-                <img src={avatar} alt="logo do torneio" width={50} />
-              </Col>
-              <Col md={6}>
-                <h2>{championship.name}</h2>
-              </Col>
-              <Col md={3}>Criado Por: {allUsers.filter(user => user.userId === championship.creatorUserId)[0].name}</Col>
-              <Col md={2}>Status: {championship.status}</Col>
-            </Row>
+            <a
+              href="http://localhost:3000/torneio/1"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <Row className={"toneioCard"}>
+                <Col md={1}>
+                  <img src={avatar} alt="logo do torneio" width={50} />
+                </Col>
+                <Col md={6}>
+                  <h2>{championship.name}</h2>
+                </Col>
+                <Col md={3}>
+                  Criado Por:{" "}
+                  {
+                    allUsers.filter(
+                      (user) => user.userId === championship.creatorUserId
+                    )[0].name
+                  }
+                </Col>
+                <Col md={2}>Status: {championship.status}</Col>
+              </Row>
+            </a>
           </div>
-
-        )
+        );
       })}
 
-      <Modal show={show} onHide={handleClose} >
-
+      <Modal show={show} onHide={handleClose}>
         <Modal.Body className={"modalNewTeam"}>
           <Form method="submit">
             <h3>Entrar em um Torneio</h3>
@@ -154,7 +176,7 @@ export const Home = () => {
                 <Form.Control
                   type="text"
                   placeholder="Código do torneio"
-                  onChange={e => handlerTournamentInCode(e)}
+                  onChange={(e) => handlerTournamentInCode(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
@@ -163,13 +185,19 @@ export const Home = () => {
                 <Form.Control
                   type="text"
                   placeholder="Código de time"
-                  onChange={e => handlerTeamCode(e)}
+                  onChange={(e) => handlerTeamCode(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
             <Row>
               <Col md={12}>
-                <Button type={"button"} variant={"primary"} onClick={() => enterTeam()}>Entrar no Time</Button>
+                <Button
+                  type={"button"}
+                  variant={"primary"}
+                  onClick={() => enterTeam()}
+                >
+                  Entrar no Time
+                </Button>
               </Col>
             </Row>
           </Form>
@@ -180,7 +208,7 @@ export const Home = () => {
                 <Form.Control
                   type="text"
                   placeholder="Nome do torneio"
-                  onChange={e => handlerTeamName(e)}
+                  onChange={(e) => handlerTeamName(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
@@ -189,7 +217,7 @@ export const Home = () => {
                 <Form.Control
                   type="text"
                   placeholder="Descrição do torneio"
-                  onChange={e => handlerDescription(e)}
+                  onChange={(e) => handlerDescription(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
@@ -198,7 +226,7 @@ export const Home = () => {
                 <Form.Control
                   type="number"
                   placeholder="Nº de times participantes"
-                  onChange={e => handlerTeams(e)}
+                  onChange={(e) => handlerTeams(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
@@ -207,20 +235,24 @@ export const Home = () => {
                 <Form.Control
                   type="text"
                   placeholder="Premiação"
-                  onChange={e => handlerAward(e)}
+                  onChange={(e) => handlerAward(e)}
                 ></Form.Control>
               </Form.Group>
             </Row>
             <Row>
               <Col md={12}>
-                <Button type={"button"} variant={"primary"} onClick={() => registerTournament()}>Entrar no Time</Button>
+                <Button
+                  type={"button"}
+                  variant={"primary"}
+                  onClick={() => registerTournament()}
+                >
+                  Entrar no Time
+                </Button>
               </Col>
             </Row>
-
           </Form>
         </Modal.Body>
-
       </Modal>
     </>
-  )
-}
+  );
+};

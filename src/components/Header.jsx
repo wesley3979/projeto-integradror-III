@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button, Container, Form, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
 import { ReactComponent as TorneioIcon } from "../assets/torneioIcon.svg";
 import { ReactComponent as UserDefaultIcon } from "../assets/user.svg";
 import { ReactComponent as UserDefaultIcon2 } from "../assets/user-2.svg";
@@ -31,82 +31,34 @@ export const Header = () => {
     return <Redirect to='/login' />
   };
   return (
-    <header className="pageHeader">
-      <Row>
-        <Col md={{ span: 2, offset: 1 }}>
-          <div
-            style={{
-              display: "flex",
-              gap: 10,
-              marginBottom: "10",
-              marginTop: 40,
-            }}
-          >
-            <TorneioIcon />
-            <h2>
-              Torne-<span style={{ color: "#E0E41A" }}>IO</span>
-            </h2>
-          </div>
-        </Col>
-        <Col md={{ span: 2, offset: 10 }} style={{ display: "flex" }}>
-          <div className={"icon"} onClick={() => handleVisible()}>
-            <UserDefaultIcon />
-            <Arrow className={"dropdownToggle"} />
-          </div>
-          {visible && (
-            <div className={"userDropdown"}>
-              <div className={"userData"}>
-                <Row>
-                  <Col md={4}>
-                    <div className={"dropDownIcon"}>
-                      <UserDefaultIcon2 />
-                    </div>
-                  </Col>
-                  <Col md={8}>
-                    <h5>{name}</h5>
-                    <p>Editar Conta</p>
-                  </Col>
-                </Row>
-              </div>
-              <hr />
-              <div>
-                <Row>
-                  <Col
-                    style={{ textAlign: "center" }}
-                    className={"menuItems"}
-                    onClick={() => redirectTournaments()}
-                  >
-                    <TorneiosIcon /> <b>Torneios</b>
-                  </Col>
-                </Row>
-              </div>
-              <hr />
-              <div>
-                <Row>
-                  <Col
-                    style={{ textAlign: "center" }}
-                    className={"menuItems"}
-                    onClick={() => redirectTeams()}
-                  >
-                    <TimesIcon /> <b>Times</b>
-                  </Col>
-                </Row>
-              </div>
-              <hr />
-              <div>
-                <Row>
-                  <Col style={{ textAlign: "center" }} 
-                  className={"menuItems"}
-                  onClick={() => redirectLogin()}
-                  >
-                    <SairIcon /> <b>Sair</b>
-                  </Col>
-                </Row>
-              </div>
-            </div>
-          )}
-        </Col>
-      </Row>
-    </header>
+    <>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="#home">
+            <header className="loginHeader" style={{ display: "flex", }}>
+              <TorneioIcon />
+              <h2>Torne-<span style={{ color: "#E0E41A" }}>IO</span></h2>
+            </header></Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+            </Nav>
+            <Nav>
+              <NavDropdown title="Opções" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Conta</NavDropdown.Item>
+                <NavDropdown.Item href="/home">
+                  Torneios
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/teams">Times</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/login">
+                  Sair da conta
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 };
