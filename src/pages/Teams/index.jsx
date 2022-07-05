@@ -19,6 +19,10 @@ export const Teams = () => {
   const [championship, setChampionship] = useState([])
   const [allUsers, setAllUsers] = useState([])
 
+  const localToken = localStorage.getItem("token")
+  const localUserId = localStorage.getItem("UserId")
+
+
   const handlerTournamentInCode = ({ target }) => {
     setTournamentInCode(target.value);
   }
@@ -63,7 +67,7 @@ export const Teams = () => {
       award
     }
     try {
-      let res = await api.post(`/championship/create`, obj, auth(token));
+      let res = await api.post(`/championship/create`, obj, auth(localToken));
       toast.success(res.data.message);
       getTournaments();
       handleClose();
@@ -73,7 +77,7 @@ export const Teams = () => {
   }
 
   const getUserData = async () => {
-    let res = await api.get(`/user/${userId}`, auth(token))
+    let res = await api.get(`/user/${localUserId}`, auth(localToken))
 
     setName(res.data.findUser.name);
     setEmail(res.data.findUser.email);
@@ -81,15 +85,15 @@ export const Teams = () => {
   }
 
   const getTournaments = async () => {
-    let res = await api.get('/championship', auth(token));
-    console.log(res.data.championship);
-    setChampionship(res.data.championship);
+    let res = await api.get('/championship', auth(localToken));
+  }
+
+  const getAllTeams = async () => {
+    let res = await api.get('/championship', auth(localToken));
   }
 
   const getAllUsers = async () => {
-    let res = await api.get('/user', auth(token))
-    console.log(res.data.allUsers)
-    setAllUsers(res.data.allUsers)
+    let res = await api.get('/user', auth(localToken))
   }
 
   useEffect(() => {
