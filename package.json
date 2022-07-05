@@ -23,10 +23,12 @@
     "react-dom": "^17.0.2",
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.5.0",
-    "react-router-dom": "^5.2.0",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^5.3.3",
     "react-scripts": "^4.0.3",
     "react-toastify": "^8.1.1",
     "sequelize": "^6.15.0",
+    "use-react-router": "^1.0.7",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

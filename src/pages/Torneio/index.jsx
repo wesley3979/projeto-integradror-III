@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify"
 import { auth } from "../../services/auth";
 import { api } from "../../services/api";
 import { ReactComponent as SairIcon } from "../../assets/icon-sair.svg";
@@ -25,20 +26,47 @@ export const Torneio = () => {
   const [matches, setMatches] = useState();
 
   const localToken = localStorage.getItem("token")
+  var localChampionshipId = window.location.pathname.replace("/torneio/", "");
 
   const GetInfosChampionshipById = async () => {
-    let res = await api.get(`/championship/9`, auth(localToken));
-    setChampionship(res.data.championship);
+    try {
+      let res = await api.get(`/championship/${localChampionshipId}`, auth(localToken));
+      setChampionship(res.data.championship);
+    } catch (e) {
+      toast.error(e.response.data.message);
+
+      setTimeout(function () {
+        window.history.back();
+      }, 2500);
+
+    }
   };
 
   const GetTableByChampionshipId = async () => {
-    let res = await api.get("/championship/3/table", auth(localToken));
-    setRanking(res.data.table);
+    try {
+      let res = await api.get(`/championship/${localChampionshipId}/table`, auth(localToken));
+      setRanking(res.data.table);
+    } catch (e) {
+      toast.error(e.response.data.message);
+
+      setTimeout(function () {
+        window.history.back();
+      }, 2500);
+
+    }
   };
 
   const GetMatchesByChaphioshipId = async () => {
-    let res = await api.get("/championship/3/matches", auth(localToken));
-    setMatches(res.data.matches);
+    try {
+      let res = await api.get(`/championship/${localChampionshipId}/matches`, auth(localToken));
+      setMatches(res.data.matches);
+    } catch (e) {
+      toast.error(e.response.data.message);
+
+      setTimeout(function () {
+        window.history.back();
+      }, 2500);
+    }
   };
 
   useEffect(() => {

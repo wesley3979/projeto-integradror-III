@@ -89,26 +89,30 @@ export const Teams = () => {
   }
 
   const getAllTeams = async () => {
-    let res = await api.get('/championship', auth(localToken));
+    let res = await api.get('/team', auth(localToken));
+    setTeams(res.data.allTeams);
   }
 
   const getAllUsers = async () => {
     let res = await api.get('/user', auth(localToken))
+    setAllUsers(res.data.allUsers);
+
   }
 
   useEffect(() => {
     getUserData();
     getAllUsers();
     getTournaments();
+    getAllTeams();
   }, [userId])
 
   return (
     <>
-      <Row>
-        <Col md={2}>
-          <h3>Torneios</h3>
+      <Row className="mt-4">
+        <Col md={3}>
+          <h3>Todos os times</h3>
         </Col>
-        <Col md={6}>
+        <Col md={5}>
           <InputGroup className="mb-3">
             <FormControl
               placeholder="Pesquisar"
@@ -124,18 +128,18 @@ export const Teams = () => {
           <Button variant="primary" onClick={handleShow}>Criar Time</Button>
         </Col>
       </Row>
-      {championship.map(championship => {
+      {teams && teams.map(team => {
         return (
-          <div className={"cardsContainer"} key={championship.championshipId}>
+          <div className={"cardsContainer"} key={team.teamId}>
             <Row className={"toneioCard"}>
               <Col md={1}>
                 <img src={avatar} alt="logo do torneio" width={50} />
               </Col>
               <Col md={6}>
-                <h2>{championship.name}</h2>
+                <h2>{team.name}</h2>
               </Col>
-              <Col md={3}>Criado Por: {allUsers.filter(user => user.userId === championship.creatorUserId)[0].name}</Col>
-              <Col md={2}>Status: {championship.status}</Col>
+              <Col md={2}>Criado por: {allUsers.filter(user => user.userId === team.creatorUserId)[0].name}</Col>
+              <Col md={3}>Quantidade de jogadores: {team.numberOfPlayers}</Col>
             </Row>
           </div>
 

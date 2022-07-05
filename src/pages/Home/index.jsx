@@ -92,7 +92,6 @@ export const Home = () => {
 
   const getTournaments = async () => {
     let res = await api.get("/championship", auth(localToken));
-    console.log(res.data.championship);
     setChampionship(res.data.championship);
   };
 
@@ -142,7 +141,7 @@ export const Home = () => {
         return (
           <div className={"cardsContainer"} key={championship.championshipId}>
             <a
-              href="http://localhost:3000/torneio/1"
+              href={"http://localhost:3000/torneio/" + championship.championshipId}
               style={{ textDecoration: "none", color: "white" }}
             >
               <Row className={"toneioCard"}>
