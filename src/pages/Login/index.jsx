@@ -33,6 +33,8 @@ export const Login = () => {
       console.log(res.data);
       setToken(res.data.token);
       setUserId(res.data.id);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('UserId', res.data.id);
       toast.success(res.data.message);
       history.push('/home');
     } catch (e) {
@@ -75,7 +77,7 @@ export const Login = () => {
           </Form>
           <p className="divider">ou</p>
           <h3>Crie sua própria conta, de forma fácil</h3>
-          <Button type="button" variant="outline-primary" ><a href="/register" style={{textDecoration: "none", color: "inherit" }}>Criar conta</a></Button>
+          <Button type="button" variant="outline-primary" ><a href="/register" style={{ textDecoration: "none", color: "inherit" }}>Criar conta</a></Button>
         </Col>
       </Row>
     </>

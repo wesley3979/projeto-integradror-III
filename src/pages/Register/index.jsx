@@ -48,6 +48,8 @@ export const Register = () => {
       console.log(res.data);
       setToken(res.data.token);
       setUserId(res.data.id);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('UserId', res.data.id);
       toast.success(res.data.message);
       history.push('/home');
     } catch (e) {
@@ -104,7 +106,7 @@ export const Register = () => {
           </Form>
           <p className="divider">ou</p>
           <h3>Já tem uma conta?</h3>
-          <Button type="button" variant="outline-primary" ><a href="/login" style={{textDecoration: "none", color: "inherit" }}>Faça login</a></Button>
+          <Button type="button" variant="outline-primary" ><a href="/login" style={{ textDecoration: "none", color: "inherit" }}>Faça login</a></Button>
         </Col>
       </Row>
     </>

@@ -26,7 +26,7 @@ export const Home = () => {
   const [award, setAward] = useState();
   const [championship, setChampionship] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-
+  const localToken = localStorage.getItem("token")
   const handlerTournamentInCode = ({ target }) => {
     setTournamentInCode(target.value);
   };
@@ -73,7 +73,7 @@ export const Home = () => {
       award,
     };
     try {
-      let res = await api.post(`/championship/create`, obj, auth(token));
+      let res = await api.post(`/championship/create`, obj, auth(localToken));
       toast.success(res.data.message);
       getTournaments();
       handleClose();
@@ -83,7 +83,7 @@ export const Home = () => {
   };
 
   const getUserData = async () => {
-    let res = await api.get(`/user/${userId}`, auth(token));
+    let res = await api.get(`/user/${userId}`, auth(localToken));
 
     setName(res.data.findUser.name);
     setEmail(res.data.findUser.email);
@@ -91,13 +91,13 @@ export const Home = () => {
   };
 
   const getTournaments = async () => {
-    let res = await api.get("/championship", auth(token));
+    let res = await api.get("/championship", auth(localToken));
     console.log(res.data.championship);
     setChampionship(res.data.championship);
   };
 
   const getAllUsers = async () => {
-    let res = await api.get("/user", auth(token));
+    let res = await api.get("/user", auth(localToken));
     console.log(res.data.allUsers);
     setAllUsers(res.data.allUsers);
   };

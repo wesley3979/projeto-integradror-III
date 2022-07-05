@@ -24,20 +24,20 @@ export const Torneio = () => {
   const [ranking, setRanking] = useState();
   const [matches, setMatches] = useState();
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUGVkZHJvIGFhYSIsImlkIjozMiwiaWF0IjoxNjQ1MjIxMDI3fQ.SeULo54wioFmq-L0TErxlnCzT7iBE0QvKoicjPQ1yKM";
+  const localToken = localStorage.getItem("token")
+
   const GetInfosChampionshipById = async () => {
-    let res = await api.get(`/championship/9`, auth(token));
+    let res = await api.get(`/championship/9`, auth(localToken));
     setChampionship(res.data.championship);
   };
 
   const GetTableByChampionshipId = async () => {
-    let res = await api.get("/championship/3/table", auth(token));
+    let res = await api.get("/championship/3/table", auth(localToken));
     setRanking(res.data.table);
   };
 
   const GetMatchesByChaphioshipId = async () => {
-    let res = await api.get("/championship/3/matches", auth(token));
+    let res = await api.get("/championship/3/matches", auth(localToken));
     setMatches(res.data.matches);
   };
 
