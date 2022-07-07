@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 export const Home = () => {
   const { userId, setName, setEmail, setImage, token } = useUser();
   const [show, setShow] = useState(false);
+  const [showModalNewTournament, setShowModalNewTournament] = useState(false);
   const [tournamentInCode, setTournamentInCode] = useState();
   const [teamCode, setTeamCode] = useState();
   const [teamName, setTeamName] = useState();
@@ -54,11 +55,18 @@ export const Home = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleModalNewTournamentClose = () => setShowModalNewTournament(false);
+  const handleModalNewTournamentShow = () => setShowModalNewTournament(true);
+
   const enterTeam = async () => {
     try {
-      let res = await api.post(
-        `/team/${teamCode}/championship/${tournamentInCode}/insert`
-      );
+      console.log(auth(localToken))
+      let obj = {
+        idteam: teamCode,
+        idchampionship: tournamentInCode
+      };
+      let res = await api.post(`/team/championship/insert`, obj, auth(localToken));
+
       toast.success(res.message);
     } catch (e) {
       toast.error(e.response.data.message);
@@ -77,6 +85,7 @@ export const Home = () => {
       toast.success(res.data.message);
       getTournaments();
       handleClose();
+      handleModalNewTournamentClose();
     } catch (e) {
       toast.error(e.response.data.message);
     }
@@ -97,15 +106,8 @@ export const Home = () => {
 
   const getAllUsers = async () => {
     let res = await api.get("/user", auth(localToken));
-    console.log(res.data.allUsers);
     setAllUsers(res.data.allUsers);
   };
-
-  // useEffect(() => {
-  //   getUserData();
-  //   getAllUsers();
-  //   getTournaments();
-  // })
 
   useEffect(() => {
     getUserData();
@@ -129,11 +131,13 @@ export const Home = () => {
           </InputGroup>
         </Col>
         <Col md={2}>
-          <p>Ordenar</p>
+          <Button variant="primary" onClick={handleModalNewTournamentShow}>
+            Criar torneio
+          </Button>
         </Col>
         <Col md={2}>
           <Button variant="primary" onClick={handleShow}>
-            Criar Torneio
+            Entrar em Torneio
           </Button>
         </Col>
       </Row>
@@ -145,10 +149,7 @@ export const Home = () => {
               style={{ textDecoration: "none", color: "white" }}
             >
               <Row className={"toneioCard"}>
-                <Col md={1}>
-                  <img src={avatar} alt="logo do torneio" width={50} />
-                </Col>
-                <Col md={6}>
+                <Col md={7}>
                   <h2>{championship.name}</h2>
                 </Col>
                 <Col md={3}>
@@ -166,91 +167,100 @@ export const Home = () => {
         );
       })}
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Body className={"modalNewTeam"}>
-          <Form method="submit">
-            <h3>Entrar em um Torneio</h3>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Código do torneio"
-                  onChange={(e) => handlerTournamentInCode(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Código de time"
-                  onChange={(e) => handlerTeamCode(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <Button
-                  type={"button"}
-                  variant={"primary"}
-                  onClick={() => enterTeam()}
-                >
-                  Entrar no Time
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-          <p>Ou</p>
-          <Form method="submit">
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Nome do torneio"
-                  onChange={(e) => handlerTeamName(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Descrição do torneio"
-                  onChange={(e) => handlerDescription(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  placeholder="Nº de times participantes"
-                  onChange={(e) => handlerTeams(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Premiação"
-                  onChange={(e) => handlerAward(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <Button
-                  type={"button"}
-                  variant={"primary"}
-                  onClick={() => registerTournament()}
-                >
-                  Entrar no Time
-                </Button>
-              </Col>
-            </Row>
+      <Modal className={"modalStyle"} show={showModalNewTournament} onHide={handleModalNewTournamentClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Crie seu próprio torneio:</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Nome do torneio</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                placeholder="Ex: Time Amigos..."
+                onChange={(e) => handlerTeamName(e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Descrição do torneio</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                placeholder="Ex: Equipe do bairro X"
+                onChange={(e) => handlerDescription(e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Nº de times participantes</Form.Label>
+              <Form.Control
+                autoFocus
+                type="number"
+                placeholder="Nº de times participantes"
+                onChange={(e) => handlerTeams(e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Premiação</Form.Label>
+              <Form.Control
+                autoFocus
+                type="text"
+                placeholder="Ex: R$XX,XX "
+                onChange={(e) => handlerAward(e)}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Fechar
+          </Button>
+          <Button type={"button"}
+            variant={"primary"}
+            onClick={() => registerTournament()}
+          >
+            Criar torneio
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal className={"modalStyle"} show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Entre em um torneio já existente</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Código do torneio</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ex: 12343"
+                autoFocus
+                onChange={(e) => handlerTournamentInCode(e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Código do time</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ex: 13254"
+                autoFocus
+                onChange={(e) => handlerTeamCode(e)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalNewTournamentClose}>
+            Fechar
+          </Button>
+          <Button type={"button"}
+            variant={"primary"}
+            onClick={() => enterTeam()}
+          >
+            Solicitar participação
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

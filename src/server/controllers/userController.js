@@ -147,7 +147,7 @@ class UserController {
     }
 
     if (!newpassword) {
-      res.status(422).json({ message: 'A senha é obrigatória' })
+      res.status(422).json({ message: 'A nova senha é obrigatória' })
       return
     }
 
@@ -201,7 +201,8 @@ class UserController {
         image
       })
 
-      return res.status(200).json({ message: 'Atualizado com sucesso' })
+      await createUserToken(userUpdateExists, req, res)
+
     } catch (err) {
       return res.status(500).json({ message: 'Erro ao atualizar usuário, tente novamente mais tarde.' })
     }

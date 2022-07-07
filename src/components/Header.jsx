@@ -45,7 +45,7 @@ export const Header = () => {
             </Nav>
             <Nav>
               <NavDropdown title="Opções" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Conta</NavDropdown.Item>
+                <NavDropdown.Item href="/user">Editar conta</NavDropdown.Item>
                 <NavDropdown.Item href="/home">
                   Torneios
                 </NavDropdown.Item>

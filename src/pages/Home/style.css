@@ -1,13 +1,14 @@
-.torneioCard{
+.torneioCard {
   background: #4717F6 !important;
 }
-.cardsContainer{
+
+.cardsContainer {
   padding: 33px;
   height: 120px;
   background: #4717F6 !important;
   margin-bottom: 15px;
-  
 }
-.modalNewTeam{
-  background: #A239CA !important;
+
+.modalStyle {
+  color: #000 !important;
 }

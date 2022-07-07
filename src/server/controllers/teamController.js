@@ -310,7 +310,11 @@ class TeamController {
   async insertTeamIntoChampionship(req, res) {
     try {
 
-      const { idteam, idchampionship } = req.params
+      const { body } = req
+      const {
+        idteam,
+        idchampionship,
+      } = body
 
       const token = getToken(req)
       const user = await getUserByToken(token)
