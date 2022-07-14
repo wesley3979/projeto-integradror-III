@@ -12,7 +12,6 @@ export const Teams = () => {
   const [show, setShow] = useState(false);
   const [tournamentInCode, setTournamentInCode] = useState();
   const [teamCode, setTeamCode] = useState();
-  var oldFilterTeams = [];
   const [teamName, setTeamName] = useState();
   const [description, setDescription] = useState();
   const [teams, setTeams] = useState();
@@ -20,6 +19,7 @@ export const Teams = () => {
   const [championship, setChampionship] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [input, setInput] = useState('');
+  const [oldFilterTeams, setOldFilterTeams] = useState([]);
 
   const localToken = localStorage.getItem("token")
   const localUserId = localStorage.getItem("UserId")
@@ -93,6 +93,7 @@ export const Teams = () => {
   const getAllTeams = async () => {
     let res = await api.get('/team', auth(localToken));
     setTeams(res.data.allTeams);
+    setOldFilterTeams(res.data.allTeams)
   }
 
   const getAllUsers = async () => {
@@ -102,15 +103,10 @@ export const Teams = () => {
   }
 
   const handleChangeInput = (event) => {
-
-    if (oldFilterTeams != [])
-      oldFilterTeams = teams
-
-    console.log(oldFilterTeams)
     setInput(event.target.value);
-
-    const filter = teams.filter(x => x.name.includes(event.target.value));
-
+    const filter = oldFilterTeams.filter(
+      x => x.name.toLowerCase().includes(event.target.value.toLowerCase())
+    );
     setTeams(filter);
   }
 
