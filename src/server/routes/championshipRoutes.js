@@ -9,6 +9,7 @@ routes.get('/:id/table', checkToken, championshipController.getTableChampionship
 routes.get('/:id/matches', checkToken, championshipController.getMatchesByChaphioshipId)
 routes.post('/create', checkToken, championshipController.createChampionship)
 routes.post('/:idchampionship/matches/:idmatch', checkToken, championshipController.updateMatch)
+routes.get('/creatorUserId/:id', checkToken, championshipController.getChampionshipByCreatorUserId)
 routes.post('/:id/update', checkToken, championshipController.updateChampionship)
 routes.post('/:id/start', checkToken, championshipController.startChampionship)
 routes.delete('/delete/:id', checkToken, championshipController.deleteChampionshipById)

@@ -2,6 +2,7 @@ const Championship = require('../models/championshipModel')
 const Team = require('../models/teamModel')
 const Match = require('../models/matchModel')
 const TeamChampionship = require('../models/teamChampionshipModel')
+const User = require('../models/userModel')
 
 const getToken = require('../helpers/get-token')
 const getUserByToken = require('../helpers/get-user-by-token')
@@ -451,6 +452,30 @@ class ChampionshipController {
     })
 
     return res.status(200).json({ table })
+  }
+
+  async getChampionshipByCreatorUserId(req, res) {
+    try {
+      const { id } = req.params
+
+      const user = await User.findByPk(id)
+
+      if (!user) {
+        return res.status(400).json({ message: 'Erro, usuário inválido.' })
+      }
+      const championship = await Championship.findAll({
+        where: { creatorUserId: user.userId }
+      })
+
+      if (championship.length < 1) {
+        return res.status(200).json({ message: 'Você ainda não criou nenhum torneio.' })
+      }
+
+      return res.status(200).json({ championship })
+
+    } catch (err) {
+      return res.status(500).json({ message: 'Erro ao buscar torneios, tente novamente mais tarde.' })
+    }
   }
 
 }
