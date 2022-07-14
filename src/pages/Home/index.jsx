@@ -143,7 +143,7 @@ export const Home = () => {
       </Row>
       {championship.map((championship) => {
         return (
-          <div className={"cardsContainer"} key={championship.championshipId}>
+          <div className={"cardsContainer p-3"} key={championship.championshipId}>
             <a
               href={"http://localhost:3000/torneio/" + championship.championshipId}
               style={{ textDecoration: "none", color: "white" }}
