@@ -27,7 +27,10 @@ export const Home = () => {
   const [award, setAward] = useState();
   const [championship, setChampionship] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+  const [oldFilterChampionship, setOldFilterChampionship] = useState([]);
+
   const localToken = localStorage.getItem("token")
+
   const handlerTournamentInCode = ({ target }) => {
     setTournamentInCode(target.value);
   };
@@ -51,6 +54,13 @@ export const Home = () => {
   const handlerAward = ({ target }) => {
     setAward(target.value);
   };
+
+  const handleChangeInput = (event) => {
+    const filter = oldFilterChampionship.filter(
+      x => x.name.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    setChampionship(filter);
+  }
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -102,6 +112,7 @@ export const Home = () => {
   const getTournaments = async () => {
     let res = await api.get("/championship", auth(localToken));
     setChampionship(res.data.championship);
+    setOldFilterChampionship(res.data.championship)
   };
 
   const getAllUsers = async () => {
@@ -127,6 +138,7 @@ export const Home = () => {
               placeholder="Pesquisar"
               aria-label="Pesquisar"
               aria-describedby="basic-addon1"
+              onChange={handleChangeInput}
             />
           </InputGroup>
         </Col>

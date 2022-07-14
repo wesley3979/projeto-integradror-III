@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 export const Teams = () => {
   const { userId, setName, setEmail, setImage, token } = useUser();
   const [show, setShow] = useState(false);
+  const [showNewTeam, setShowNewTeam] = useState(false);
   const [tournamentInCode, setTournamentInCode] = useState();
   const [teamCode, setTeamCode] = useState();
   const [teamName, setTeamName] = useState();
@@ -18,7 +19,6 @@ export const Teams = () => {
   const [award, setAward] = useState();
   const [championship, setChampionship] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-  const [input, setInput] = useState('');
   const [oldFilterTeams, setOldFilterTeams] = useState([]);
 
   const localToken = localStorage.getItem("token")
@@ -51,6 +51,9 @@ export const Teams = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleCloseNewTeam = () => setShowNewTeam(false);
+  const handleShowNewTeam = () => setShowNewTeam(true);
 
   const enterTeam = async () => {
     try {
@@ -103,7 +106,6 @@ export const Teams = () => {
   }
 
   const handleChangeInput = (event) => {
-    setInput(event.target.value);
     const filter = oldFilterTeams.filter(
       x => x.name.toLowerCase().includes(event.target.value.toLowerCase())
     );
@@ -134,10 +136,10 @@ export const Teams = () => {
           </InputGroup>
         </Col>
         <Col md={2}>
-          <p>Ordenar</p>
+          <Button variant="primary" onClick={handleShowNewTeam}>Criar novo Time</Button>
         </Col>
         <Col md={2}>
-          <Button variant="primary" onClick={handleShow}>Criar Time</Button>
+          <Button variant="primary" onClick={handleShow}>Entrar em Time</Button>
         </Col>
       </Row>
       {teams && teams.map(team => {
@@ -158,64 +160,76 @@ export const Teams = () => {
         )
       })}
 
-      <Modal show={show} onHide={handleClose} >
-
-        <Modal.Body className={"modalNewTeam"}>
-          <Form method="submit">
-            <h3>Entrar em um time</h3>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Código de time"
-                  onChange={e => handlerTeamCode(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <Button type={"button"} variant={"primary"} onClick={() => enterTeam()}>Entrar no Time</Button>
-              </Col>
-            </Row>
-          </Form>
-          <p>Ou</p>
-          <Form method="submit">
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Nome do time"
-                  onChange={e => handlerTeamName(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="Sigla do time (Ex: FLA)"
-                  onChange={e => handlerDescription(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  placeholder="Nº de jogadores participantes"
-                  onChange={e => handlerTeams(e)}
-                ></Form.Control>
-              </Form.Group>
-            </Row>
-            <Row>
-              <Col md={12}>
-                <Button type={"button"} variant={"primary"} onClick={() => registerTournament()}>Criar novo time</Button>
-              </Col>
-            </Row>
-
+      <Modal className={"modalStyle"} show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Entre em um time</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Código do time</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ex: 13254"
+                autoFocus
+                onChange={(e) => handlerTeamCode(e)}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button type={"button"}
+            variant={"primary"}
+            onClick={() => enterTeam()}
+          >
+            Solicitar participação
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
+      <Modal className={"modalStyle"} show={showNewTeam} onHide={handleCloseNewTeam}>
+        <Modal.Header closeButton>
+          <Modal.Title>Criar novo time</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Nome do time</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ex: Flamengo"
+                onChange={e => handlerTeamName(e)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Sigla do time</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ex: FLA"
+                onChange={e => handlerDescription(e)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Nº de jogadores participantes</Form.Label>
+
+              <Form.Control
+                type="number"
+                placeholder="Ex: 5"
+                onChange={e => handlerTeams(e)}
+              ></Form.Control>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button type={"button"}
+            variant={"primary"}
+            onClick={() => registerTournament()}
+          >
+            Criar time
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   )
