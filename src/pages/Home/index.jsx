@@ -212,9 +212,6 @@ export const Home = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Fechar
-          </Button>
           <Button type={"button"}
             variant={"primary"}
             onClick={() => registerTournament()}
@@ -251,9 +248,6 @@ export const Home = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalNewTournamentClose}>
-            Fechar
-          </Button>
           <Button type={"button"}
             variant={"primary"}
             onClick={() => enterTeam()}

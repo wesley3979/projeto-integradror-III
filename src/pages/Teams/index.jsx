@@ -12,12 +12,14 @@ export const Teams = () => {
   const [show, setShow] = useState(false);
   const [tournamentInCode, setTournamentInCode] = useState();
   const [teamCode, setTeamCode] = useState();
+  var oldFilterTeams = [];
   const [teamName, setTeamName] = useState();
   const [description, setDescription] = useState();
   const [teams, setTeams] = useState();
   const [award, setAward] = useState();
-  const [championship, setChampionship] = useState([])
-  const [allUsers, setAllUsers] = useState([])
+  const [championship, setChampionship] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [input, setInput] = useState('');
 
   const localToken = localStorage.getItem("token")
   const localUserId = localStorage.getItem("UserId")
@@ -99,6 +101,19 @@ export const Teams = () => {
 
   }
 
+  const handleChangeInput = (event) => {
+
+    if (oldFilterTeams != [])
+      oldFilterTeams = teams
+
+    console.log(oldFilterTeams)
+    setInput(event.target.value);
+
+    const filter = teams.filter(x => x.name.includes(event.target.value));
+
+    setTeams(filter);
+  }
+
   useEffect(() => {
     getUserData();
     getAllUsers();
@@ -118,6 +133,7 @@ export const Teams = () => {
               placeholder="Pesquisar"
               aria-label="Pesquisar"
               aria-describedby="basic-addon1"
+              onChange={handleChangeInput}
             />
           </InputGroup>
         </Col>
