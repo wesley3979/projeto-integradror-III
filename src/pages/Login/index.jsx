@@ -73,11 +73,10 @@ export const Login = () => {
                 onChange={e => handlerPassword(e)}
               ></Form.Control>
             </Form.Group>
-            <Button type="button" onClick={handlerSubmit} variant="primary">Fazer Login</Button>
+            <Button type="button" className="button" onClick={handlerSubmit} variant="primary">Fazer Login</Button>
           </Form>
-          <p className="divider">ou</p>
           <h3>Crie sua própria conta, de forma fácil</h3>
-          <Button type="button" variant="outline-primary" ><a href="/register" style={{ textDecoration: "none", color: "inherit" }}>Criar conta</a></Button>
+          <Button type="button" className="button" variant="outline-primary" ><a href="/register" style={{ textDecoration: "none", color: "inherit" }}>Criar conta</a></Button>
         </Col>
       </Row>
     </>

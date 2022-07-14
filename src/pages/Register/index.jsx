@@ -102,11 +102,10 @@ export const Register = () => {
                 onChange={e => handlerConfirmPassword(e)}
               ></Form.Control>
             </Form.Group>
-            <Button type="button" onClick={handlerSubmit} variant="primary">Criar conta</Button>
+            <Button type="button" className="button" onClick={handlerSubmit} variant="primary">Criar conta</Button>
           </Form>
-          <p className="divider">ou</p>
           <h3>Já tem uma conta?</h3>
-          <Button type="button" variant="outline-primary" ><a href="/login" style={{ textDecoration: "none", color: "inherit" }}>Faça login</a></Button>
+          <Button type="button" className="button" variant="outline-primary" ><a href="/login" style={{ textDecoration: "none", color: "inherit" }}>Faça login</a></Button>
         </Col>
       </Row>
     </>

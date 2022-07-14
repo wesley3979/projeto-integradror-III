@@ -79,7 +79,7 @@ export const Torneio = () => {
     <>
       <Row className="mt-2 mb-2">
         <Col md={2}>
-          <Button variant="primary">
+          <Button variant="primary" className="button">
             <a href="/home" style={{ textDecoration: "none", color: "inherit" }}>
               <SairIcon />
               Voltar

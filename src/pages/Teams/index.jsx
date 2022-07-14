@@ -125,7 +125,7 @@ export const Teams = () => {
           <p>Ordenar</p>
         </Col>
         <Col md={2}>
-          <Button variant="primary" onClick={handleShow}>Criar Time</Button>
+          <Button variant="primary" className="button" onClick={handleShow}>Criar Time</Button>
         </Col>
       </Row>
       {teams && teams.map(team => {

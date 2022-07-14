@@ -154,7 +154,7 @@ export const User = () => {
               variant="primary"
               className="buttonSaveChanges"
             >
-              Salvar alterações
+              Salvar
             </Button>
           </Form>
         </div>

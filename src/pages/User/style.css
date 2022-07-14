@@ -8,4 +8,21 @@
 }
 .buttonSaveChanges{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --c: #e0e41a;
+  color: var(--c) !important;
+  font-size: 14px !important;
+  border: 0.3em solid var(--c) !important;
+  border-radius: 0px !important;
+  width: 12em;
+  height: 3em;
+  background-color: #000000 !important;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 3em;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: 0.5s;
 }

@@ -131,13 +131,13 @@ export const Home = () => {
           </InputGroup>
         </Col>
         <Col md={2}>
-          <Button variant="primary" onClick={handleModalNewTournamentShow}>
+          <Button variant="primary" className="button" onClick={handleModalNewTournamentShow}>
             Criar torneio
           </Button>
         </Col>
         <Col md={2}>
-          <Button variant="primary" onClick={handleShow}>
-            Entrar em Torneio
+          <Button variant="primary" className="button" onClick={handleShow}>
+            Entrar
           </Button>
         </Col>
       </Row>
