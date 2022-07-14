@@ -6,6 +6,9 @@ import { Teams } from '../pages/Teams/index.jsx'
 import { Torneio } from '../pages/Torneio/index.jsx'
 import { User } from '../pages/User/index.jsx'
 import { Team } from '../pages/Team/index.jsx'
+import { MyTournaments } from '../pages/MyTournaments/index.jsx'
+import { MyTeams } from '../pages/MyTeams/index.jsx'
+
 
 export const Pages = () => {
   return (
@@ -19,6 +22,9 @@ export const Pages = () => {
         <Route path="/team/:id?" exact={true} component={Team} />
         <Route path="/torneio/:id?" exact={true} component={Torneio} />
         <Route path="/user" exact={true} component={User} />
+        <Route path="/myTournaments" exact={true} component={MyTournaments} />
+        <Route path="/myTeams" exact={true} component={MyTeams} />
+
       </Switch>
     </Router>
   )

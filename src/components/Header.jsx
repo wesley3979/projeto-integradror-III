@@ -45,12 +45,19 @@ export const Header = () => {
             </Nav>
             <Nav>
               <NavDropdown title="Opções" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/user">Editar conta</NavDropdown.Item>
                 <NavDropdown.Item href="/home">
-                  Torneios
+                  Todos torneios
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/teams">Times</NavDropdown.Item>
+                <NavDropdown.Item href="/teams">Todos times</NavDropdown.Item>
                 <NavDropdown.Divider />
+                <NavDropdown.Item href="/myTournaments">
+                  Meus torneios
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/myTeams">
+                  Meus times
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/user">Editar conta</NavDropdown.Item>
                 <NavDropdown.Item href="/login">
                   Sair da conta
                 </NavDropdown.Item>

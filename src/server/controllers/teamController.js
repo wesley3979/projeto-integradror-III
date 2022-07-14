@@ -365,5 +365,30 @@ class TeamController {
     }
   }
 
+  async getTeamsByCreatorUserId(req, res) {
+    try {
+      const { id } = req.params
+
+      const user = await User.findByPk(id)
+
+      if (!user) {
+        return res.status(400).json({ message: 'Erro, usuário inválido.' })
+      }
+
+      const teams = await Team.findAll({
+        where: { creatorUserId: user.userId }
+      })
+
+      if (teams.length < 1) {
+        return res.status(200).json({ message: 'Você ainda não criou nenhum time.' })
+      }
+
+      return res.status(200).json({ teams })
+
+    } catch (err) {
+      return res.status(500).json({ message: 'Erro ao buscar partidas, tente novamente mais tarde.' })
+    }
+  }
+
 }
 module.exports = new TeamController
