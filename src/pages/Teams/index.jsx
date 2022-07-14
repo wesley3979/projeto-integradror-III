@@ -16,7 +16,7 @@ export const Teams = () => {
   const [teamName, setTeamName] = useState();
   const [description, setDescription] = useState();
   const [teams, setTeams] = useState();
-  const [award, setAward] = useState();
+  const [numberTeams, setNumberTeams] = useState();
   const [championship, setChampionship] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [oldFilterTeams, setOldFilterTeams] = useState([]);
@@ -45,8 +45,8 @@ export const Teams = () => {
     setTeams(target.value);
   }
 
-  const handlerAward = ({ target }) => {
-    setAward(target.value);
+  const handlerNumberTeams = ({ target }) => {
+    setNumberTeams(target.value);
   }
 
   const handleClose = () => setShow(false);
@@ -57,25 +57,30 @@ export const Teams = () => {
 
   const enterTeam = async () => {
     try {
-      let res = await api.post(`/team/${teamCode}/championship/${tournamentInCode}/insert`)
-      toast.success(res.message);
+      let obj = {
+        "UserId": localUserId,
+        "TeamId": teamCode
+      }
+
+      let res = await api.post(`/team/user`, obj, auth(localToken))
+      toast.success(res.data.message);
+      handleClose();
     } catch (e) {
       toast.error(e.response.data.message);
     }
   }
 
-  const registerTournament = async () => {
+  const registerTeam = async () => {
     let obj = {
       name: teamName,
-      description,
-      numberTeams: teams,
-      award
+      abbreviation: description,
+      numberOfPlayers: parseInt(numberTeams),
     }
     try {
-      let res = await api.post(`/championship/create`, obj, auth(localToken));
-      toast.success(res.data.message);
+      let res = await api.post(`/team/create`, obj, auth(localToken));
+      toast.success("Time criado com sucesso");
       getTournaments();
-      handleClose();
+      handleCloseNewTeam();
     } catch (e) {
       toast.error(e.response.data.message);
     }
@@ -144,19 +149,20 @@ export const Teams = () => {
       </Row>
       {teams && teams.map(team => {
         return (
-          <div className={"cardsContainer"} key={team.teamId}>
-            <Row className={"toneioCard"}>
-              <Col md={1}>
-                <img src={avatar} alt="logo do torneio" width={50} />
-              </Col>
-              <Col md={6}>
-                <h2>{team.name}</h2>
-              </Col>
-              <Col md={2}>Criado por: {allUsers.filter(user => user.userId === team.creatorUserId)[0].name}</Col>
-              <Col md={3}>Quantidade de jogadores: {team.numberOfPlayers}</Col>
-            </Row>
-          </div>
-
+          <a
+            href={"http://localhost:3000/team/" + team.teamId}
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <div className={"cardsContainer"} key={team.teamId}>
+              <Row className={"toneioCard"}>
+                <Col md={7}>
+                  <h2>{team.name}</h2>
+                </Col>
+                <Col md={2}>Criado por: {allUsers.filter(user => user.userId === team.creatorUserId)[0].name}</Col>
+                <Col md={3}>Quantidade de jogadores: {team.numberOfPlayers}</Col>
+              </Row>
+            </div>
+          </a>
         )
       })}
 
@@ -213,11 +219,11 @@ export const Teams = () => {
 
             <Form.Group className="mb-3">
               <Form.Label>Nº de jogadores participantes</Form.Label>
-
               <Form.Control
+                autoFocus
                 type="number"
                 placeholder="Ex: 5"
-                onChange={e => handlerTeams(e)}
+                onChange={(e) => handlerNumberTeams(e)}
               ></Form.Control>
             </Form.Group>
           </Form>
@@ -225,7 +231,7 @@ export const Teams = () => {
         <Modal.Footer>
           <Button type={"button"}
             variant={"primary"}
-            onClick={() => registerTournament()}
+            onClick={() => registerTeam()}
           >
             Criar time
           </Button>

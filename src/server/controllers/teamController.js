@@ -338,7 +338,7 @@ class TeamController {
         return res.status(400).json({ message: 'Erro ao inserir equipe em torneio, o torneio informado não existe.' })
       }
 
-      const existsTeam = await TeamChampionship.findOne({ where: { teamId: team.teamId } })
+      const existsTeam = await TeamChampionship.findOne({ where: { teamId: team.teamId, championshipId: championship.championshipId } })
 
       if (existsTeam) {
         return res.status(400).json({

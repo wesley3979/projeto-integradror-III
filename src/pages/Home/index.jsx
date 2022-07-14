@@ -77,7 +77,8 @@ export const Home = () => {
       };
       let res = await api.post(`/team/championship/insert`, obj, auth(localToken));
 
-      toast.success(res.message);
+      toast.success(res.data.message);
+      handleClose();
     } catch (e) {
       toast.error(e.response.data.message);
     }
